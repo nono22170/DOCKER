@@ -1,0 +1,6 @@
+#!/bin/bash
+echo "Tous les fichiers md présent dans le dossier sont mis dans le volume"
+for var in *.md
+do
+    docker container cp $var sae103-mdtopng:/data/
+done

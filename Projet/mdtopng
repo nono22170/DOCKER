@@ -1,0 +1,37 @@
+#!/bin/bash
+echo "Début du conteneur mdtopng"
+while true 
+do
+  if [ -e "config" ]
+  then
+    echo "Début de md to png"
+    num=1
+    for var in *.md
+    do
+      echo "Création des fichiers html de $var"
+      mkdir $num"pages"
+      php mdtohtml.php $var $num
+      numS=1
+      echo "Fin création des fichiers html"
+      echo "Création des fichiers png de $var"
+      cp diapo_image.png $num"pages" 
+      cd $num"pages" 
+      for var2 in *.html
+      do
+        echo $var2 
+        html2png "768x1024x24" $var2 $numS".png" 
+        ((numS++))
+        rm $var2 
+      done
+      echo "Fin création des fichiers png"
+      rm diapo_image.png 
+      cd ../ 
+      rm $var
+      ((num++))
+    done
+    echo "Fin traitement"
+    rm config
+    touch config2
+  fi
+  sleep 5
+done 

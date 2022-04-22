@@ -1,0 +1,3 @@
+#!/bin/bash
+echo "Récupération de l'archive contenant les pdf"
+docker container cp sae103-mdtopng:/data/archive.tgz .

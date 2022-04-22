@@ -1,0 +1,7 @@
+#!/bin/bash
+echo "Arrêt des conteneurs et du volume"
+docker container stop sae103-mdtopng
+docker container rm sae103-mdtopng
+docker container stop sae103-pngtopdf
+docker container rm sae103-pngtopdf
+docker volume rm sae103

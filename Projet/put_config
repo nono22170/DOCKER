@@ -1,0 +1,3 @@
+#!/bin/bash
+echo "Config est mis dans le volume"
+docker container cp config sae103-mdtopng:/data/

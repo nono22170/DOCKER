@@ -1,0 +1,29 @@
+#!/bin/bash
+echo Création volume
+docker volume create sae103
+
+echo Installation des scripts dans volume
+# HTML2PNG 
+docker container run -d --name sae103-tmp1 -v sae103:/data img_izka tail 
+# PNG2PDF - ImageMagick
+docker container run -d --name sae103-tmp -v sae103:/data img_jaiz tail 
+
+docker cp mdtohtml.php sae103-tmp1:/data
+docker cp mdtopng sae103-tmp1:/data
+docker cp base.html sae103-tmp1:/data
+docker cp fin.html sae103-tmp1:/data
+docker cp pngtopdf sae103-tmp:/data
+docker cp diapo_image.png sae103-tmp1:/data
+
+echo Fin installation
+docker container stop sae103-tmp1
+docker container rm sae103-tmp1
+docker container stop sae103-tmp
+docker container rm sae103-tmp
+
+echo Lancement des conteneurs
+
+docker container run -d --name sae103-mdtopng -w /data -v sae103:/data img_izka ./mdtopng 
+docker container run -d --name sae103-pngtopdf -w /data -v sae103:/data img_jaiz ./pngtopdf
+
+echo Pret

@@ -1,0 +1,21 @@
+#!/bin/bash
+echo "Début du conteneur pngtopdf"
+while true 
+do
+  if [ -e config2 ]
+  then
+    echo "Début du traitement png to pdf"
+    num=1
+    for var in ?pages
+    do 
+      convert $var"/*.png" $num.pdf
+      ((num++))
+    done
+    echo "Création de l'archive contenant tous les pdf"
+    tar -czvf archive.tgz *.pdf
+    rm config2 
+    rm *pdf
+    echo "Fin traitement"
+  fi 
+  sleep 5
+done 
